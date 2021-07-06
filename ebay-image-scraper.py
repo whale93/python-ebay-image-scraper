@@ -7,7 +7,7 @@ from datetime import datetime
 
 
 #Keywords
-keywords_list = ['iphone 4', 'samsung galaxy s4']
+keywords_list = ['iphone 4', 'samsung galaxy s4', '734tyrhufe79t4uahgr']
 
 
 #Paths
@@ -62,7 +62,7 @@ def download_images(url, num, writepath):
 
             #Unexpected error
             else :
-                print(f'({currentdatetime()}) FatalError...Stopping Script...')
+                print(f'({currentdatetime()}) FatalError...Stopping Script...\n')
                 raise
 
 def find_products(productIDs, keywords, writepath):
@@ -105,20 +105,12 @@ def find_products(productIDs, keywords, writepath):
                         break
 
                     else :
-                        print(f'({currentdatetime()}) FatalError...Stopping Script...')
+                        print(f'({currentdatetime()}) FatalError...Stopping Script...\n')
                         raise
 
     except Exception as e:
-        #If no product ids
-        if str(type(e)) == keyword_error:
-            print(f'\tNo results found for "{keywords}"')
-            global keyword_errors_list
-            keyword_errors_list.append(keywords)
-
-        #Unexpected error
-        else :
-            print(f'({currentdatetime()}) FatalError...Stopping Script...')
-            raise
+        print(f'({currentdatetime()}) FatalError...Stopping Script...\n')
+        raise
 
 #Search ebay and return the results
 def scrape_productIDs(keywords):
@@ -141,9 +133,16 @@ def scrape_productIDs(keywords):
                 print(f'({currentdatetime()}) ConnectionError...Retry in 5 minutes...')
                 sleep(300)
 
+            #No results found
+            elif str(type(e)) == keyword_error:
+                print(f'\tNo results found for "{keywords}"')
+                global keyword_errors_list
+                keyword_errors_list.append(keywords)
+                return False
+
             #Unexpected error
             else :
-                print(f'({currentdatetime()}) FatalError...Stopping Script...')
+                print(f'({currentdatetime()}) FatalError...Stopping Script...\n')
                 raise
 
 
@@ -154,12 +153,19 @@ def main():
 
     for keywords in keywords_list:
         print(f'({currentdatetime()}) Keywords: "{keywords}"')
-        if os.path.exists(os.path.join(writepath, keywords)) == False:
-            os.mkdir(os.path.join(writepath, keywords))
         productIDs = scrape_productIDs(keywords)
-        find_products(productIDs, keywords, writepath)
+        if productIDs != False:
+            if os.path.exists(os.path.join(writepath, keywords)) == False:
+                os.mkdir(os.path.join(writepath, keywords))
+            find_products(productIDs, keywords, writepath)
 
 
 #Run main function
 if __name__ == "__main__":
     main()
+    #Save keywords with no results
+    if len(keyword_errors_list) > 0:
+        with open('keyword_errors_list.txt', 'w') as f:
+            for keyword in keyword_errors_list:
+                f.write(keyword)
+                f.write('\n')
