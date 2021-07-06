@@ -23,7 +23,7 @@ client_secret = 'ENTER_YOUR_CERTID_HERE'
 
 Replace with search terms.
 ```sh
-keywords_list = ['iphone 4', 'samsung galaxy s4']
+keywords_list = ['iphone 4', 'samsung galaxy s4', '734tyrhufe79t4uahgr']
 ```
 <br />
 
