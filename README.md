@@ -38,7 +38,7 @@ request = {
 }
 ```
 
-If you are downloading many images and may exceed Ebays 5000 calls a day limit, uncomment the following code in *find_products()*. This forces the program to make 1 browsing API call every 17 seconds. Consider implementing a rotating proxy as well or Ebay may temporarily block you IP.
+There is an api call limit of 2500 calls a day.
 ```sh
 #start_time = perf_counter()
 .
