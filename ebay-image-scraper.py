@@ -26,12 +26,10 @@ DEV_ID = 'ENTER_YOUR_DEVID_HERE'
 EBAY_AUTHNAUTH = 'ENTER_YOUR_AUTH_N_AUTH_TOKEN_HERE'
 
 
-
  #Ebay API
 ebaysdkapi_finding = Finding(config_file=None, appid=CLIENT_ID,certid=CLIENT_SECRET,debug=False, siteid="EBAY-US")
 ebaysdkapi_trading = Trading(config_file=None, appid=CLIENT_ID, certid=CLIENT_SECRET, devid=DEV_ID, token=EBAY_AUTHNAUTH, debug=False)
 ebaysdkapi_shopping = Shopping(config_file=None, appid=CLIENT_ID,certid=CLIENT_SECRET,debug=False)
-
 
 
 #Global variables
@@ -97,16 +95,17 @@ def find_products(productIDs, keywords, WRITE_PATH):
                             for imageurl in response.dict()['Item']['PictureDetails']['PictureURL']:
                                 download_images(imageurl, imageNo, os.path.join(WRITE_PATH, keywords))
                                 imageNo+=1
-
-                        if PACE:
-                            end_time = perf_counter()
-                            if end_time - start_time < 11.53:
-                                sleep(11.53-(end_time - start_time)) 
                         
                     except Exception as e:
                         #If not pictures found
                         if str(type(e)) == pictureURL_error:
                             print(f'\tNo images found for: {productID.itemId}')
+
+
+                    if PACE:
+                        end_time = perf_counter()
+                        if end_time - start_time < 11.53:
+                            sleep(11.53-(end_time - start_time)) 
                     
                     break
 
