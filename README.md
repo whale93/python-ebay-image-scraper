@@ -6,9 +6,10 @@ A simple implementation of the [python ebaysdk](https://github.com/timotheus/eba
 
 ## Prerequisites
 
-[python ebaysdk](https://github.com/timotheus/ebaysdk-python)
+[ebaysdk](https://github.com/timotheus/ebaysdk-python)
+[openpyxl](https://pypi.org/project/openpyxl/)
 ```sh
-pip install ebaysdk
+pip install ebaysdk openpyxl
 ```
 
 
